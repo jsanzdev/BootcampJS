@@ -11,4 +11,6 @@
 6. Cambia a la branch Development.
    ``` git checkout development ```
 7. Stagea, haz commit y push.
-   ``` git 
+   ``` git add . && git commit -m "Mi primer commit" && git push -u origin development```
+8. Mergea la branch development en main
+   ``` git checkout main && git merge development && git push ```
