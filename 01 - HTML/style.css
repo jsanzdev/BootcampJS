@@ -13,17 +13,20 @@ body {
   padding: 0 20px;
 }
 
-.menu-bar {
+.navbar {
   border-bottom: 1px solid #212429;
   width: 100%;
+  position: sticky;
+  top: 0;
+  transition: top 0.3s;
 }
 
-.menu-bar ul {
+.navbar ul {
   display: flex;
   justify-content: space-between;
 }
 
-.nav-menu li {
+.navbar li {
   font-style: none;
   color: #212429;
   display: inline-block;
@@ -32,7 +35,7 @@ body {
   padding: 20px;
 }
 
-.nav-menu a {
+.navbar a {
   text-decoration: none;
   color: #212429;
 }
@@ -116,4 +119,33 @@ footer a {
 
 footer p {
   margin: 12px;
+}
+
+
+@media (max-width: 920px) {
+  .grid-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .navbar ul {
+    display: block;
+  }
+
+  .navbar li {
+    display: block;
+  }
+
+  .navbar li:not(:first-child) {
+    display: none;
+  }
+
+  footer ul {
+    display: block;
+  }
+
+  footer li {
+    border-bottom: 1px solid #ffffff;
+    display: block;
+  }
+
 }
