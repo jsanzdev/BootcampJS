@@ -2,6 +2,12 @@ import "./style.css";
 
 let score: number = 0;
 
+const scoreElement = document.getElementById("puntuacion");
+const botonPedirCarta = document.getElementById("pedir-carta");
+const botonReiniciar = document.getElementById("reiniciar");
+const botonPlantarse = document.getElementById("plantarse");
+const messageElement = document.getElementById("mensaje");
+
 type Cartas = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 10 | 11 | 12;
 
 function generateNumber(): number {
@@ -71,20 +77,25 @@ function updateScore(newScore: number) {
   } else {
     score += newScore;
   }
-  let scoreElement = document.getElementById("puntuacion");
   if (scoreElement && scoreElement instanceof HTMLSpanElement) {
     scoreElement.innerText = score.toString();
   }
   if (score === 7.5) {
-    console.log("Has ganado");
+    updateMessage("Has ganado!");
     if (botonPedirCarta && botonPedirCarta instanceof HTMLButtonElement) {
       botonPedirCarta.disabled = true;
     }
   } else if (score > 7.5) {
-    console.log("Has perdido");
+    updateMessage("Has perdido!");
     if (botonPedirCarta && botonPedirCarta instanceof HTMLButtonElement) {
       botonPedirCarta.disabled = true;
     }
+  }
+}
+
+function updateMessage(message: string): void {
+  if (messageElement && messageElement instanceof HTMLSpanElement) {
+    messageElement.innerText = message;
   }
 }
 
@@ -112,11 +123,11 @@ function playCard(): void {
 
 function plantarse(): void {
   if (score < 4) {
-    console.log("Has sido muy conservador");
+    updateMessage("Has sido muy conservador");
   } else if (score === 5) {
-    console.log("Te ha entrado el canguelo eh?");
+    updateMessage("Te ha entrado el canguelo eh?");
   } else if (score === 6 || score === 7) {
-    console.log("Casi casi...");
+    updateMessage("Casi casi...");
   }
   if (botonPedirCarta && botonPedirCarta instanceof HTMLButtonElement) {
     botonPedirCarta.disabled = true;
@@ -137,11 +148,10 @@ function restartGame(): void {
   if (botonPedirCarta && botonPedirCarta instanceof HTMLButtonElement) {
     botonPedirCarta.disabled = false;
   }
+  if (messageElement && messageElement instanceof HTMLSpanElement) {
+    messageElement.innerText = "";
+  }
 }
-
-const botonPedirCarta = document.getElementById("pedir-carta");
-const botonReiniciar = document.getElementById("reiniciar");
-const botonPlantarse = document.getElementById("plantarse");
 
 if (botonPedirCarta && botonPedirCarta instanceof HTMLButtonElement) {
   botonPedirCarta.addEventListener("click", () => {

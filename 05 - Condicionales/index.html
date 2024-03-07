@@ -1,29 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
-  </head>
-  <body>
-    <div id="app">
-      <h1>El juego de las siete y media!</h1>
-      <div id="cartas">
-        <img src="https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg" id="card" alt="Carta trasera" />
-      </div>
-      <div id="Puntuacion">
-        <h2>Puntuación: <span id="puntuacion">0</span></h2>
-        <h3>Numero de Cartas restantes: <span id="cartas-restantes">10</span></h3>
-      </div>
-      <div id="botones">
-        <button id="pedir-carta">Pedir carta</button>
-        <button id="plantarse">Plantarse</button>
-      </div>
-      <div>
-        <button class="reiniciar" id="reiniciar">Reiniciar</button>
-      </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite + TS</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>El juego de las siete y media!</h1>
+    <div id="cartas">
+      <img src="https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg" id="card"
+        alt="Carta trasera" />
     </div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+    <div id="Puntuacion">
+      <h2>Puntuación: <span id="puntuacion">0</span></h2>
+      <h1><span id="mensaje"></span></h1>
+    </div>
+    <div id="botones">
+      <button id="pedir-carta">Pedir carta</button>
+      <button id="plantarse">Plantarse</button>
+    </div>
+    <div>
+      <button class="reiniciar" id="reiniciar">Reiniciar</button>
+    </div>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
 </html>
