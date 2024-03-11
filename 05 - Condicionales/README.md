@@ -34,8 +34,9 @@ function playCard(): void {
 }
 ```
 Esta funcion esta ligada al boton "Pedir Carta". Usando la funcion ```generateNumber()``` generamos un numero del 1 al 10 si el numero es mayor que 7, se le suman dos. Despues pasamos el numero como parametro en la funcion ```showCard()``` y ```updateScore```
+
 4. En updateScore esta la logica para que el jugador pierda o gane.
 5. Una vez la logica funcionaba, añadi los botones de Plantarse y Reiniciar. Creando funciones para parar el juego y reiniciar el juego.
 6. En la funcion de plantarse es donde he colocado la logica para comprar la puntuacion.
 7. La funcion Reiniciar, simplemente pone el juego como al principio, le da la vuelta a la carta y pone la puntuacio a 0.
-8, Por ultimo, añadi que cuando la partida acabase, el boton de pedir carta se deshabilita.
+8. Por ultimo, añadi que cuando la partida acabase, el boton de pedir carta se deshabilita.
