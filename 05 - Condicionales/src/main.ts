@@ -1,7 +1,7 @@
 import "./style.css";
 
 let score: number = 0;
-
+// Element variables
 const scoreElement = document.getElementById("puntuacion");
 const botonPedirCarta = document.getElementById("pedir-carta");
 const botonReiniciar = document.getElementById("reiniciar");
