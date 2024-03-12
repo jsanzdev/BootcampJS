@@ -7,14 +7,13 @@ const botonPedirCarta = document.getElementById("pedir-carta");
 const botonReiniciar = document.getElementById("reiniciar");
 const botonPlantarse = document.getElementById("plantarse");
 const messageElement = document.getElementById("mensaje");
+const cardElement = document.getElementById("card");
 
-type Cartas = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 10 | 11 | 12;
-
-function generateNumber(): number {
+const generateRandomNumber = (): number => {
   return Math.floor(Math.random() * 10) + 1;
-}
+};
 
-function showCard(card: Cartas) {
+const getCardUrl = (card: number) => {
   let cardImage: string = "";
 
   switch (card) {
@@ -64,64 +63,89 @@ function showCard(card: Cartas) {
       break;
   }
 
-  let cardElement = document.getElementById("card") as HTMLImageElement;
+  return cardImage;
+};
 
+const printUrlCard = (urlCard: string) => {
   if (cardElement && cardElement instanceof HTMLImageElement) {
-    cardElement.src = cardImage;
+    cardElement.src = urlCard;
   }
-}
+};
 
-function updateScore(newScore: number) {
-  if (newScore > 7) {
-    score += 0.5;
-  } else {
-    score += newScore;
-  }
-  if (scoreElement && scoreElement instanceof HTMLSpanElement) {
-    scoreElement.innerText = score.toString();
-  }
-  if (score === 7.5) {
-    updateMessage("Has ganado!");
-    if (botonPedirCarta && botonPedirCarta instanceof HTMLButtonElement) {
-      botonPedirCarta.disabled = true;
-    }
-  } else if (score > 7.5) {
-    updateMessage("Has perdido!");
-    if (botonPedirCarta && botonPedirCarta instanceof HTMLButtonElement) {
-      botonPedirCarta.disabled = true;
-    }
-  }
-}
-
-function updateMessage(message: string): void {
+const updateMessage = (message: string) => {
   if (messageElement && messageElement instanceof HTMLSpanElement) {
     messageElement.innerText = message;
   }
-}
+};
 
-function playCard(): void {
-  let card = generateNumber();
-  if (card > 7) {
-    card += 2;
+const generateCardNumber = (randomNumber: number) => {
+  if (randomNumber > 7) {
+    randomNumber += 2;
   }
-  console.log(card);
-  showCard(card as Cartas);
-  updateScore(card);
-}
 
-// function disableButton(button: HTMLButtonElement): void {
-//   if (button && button instanceof HTMLButtonElement) {
-//     button.disabled = true;
-//   }
-// }
+  return randomNumber;
+};
 
-// function enableButton(button: HTMLButtonElement): void {
-//   if (button && button instanceof HTMLButtonElement) {
-//     button.disabled = false;
-//   }
-// }
+const getCardPoints = (card: number) => {
+  if (card > 7) {
+    return 0.5;
+  }
 
-function plantarse(): void {
+  return card;
+};
+
+const sumPoints = (point: number) => {
+  return score + point;
+};
+
+const setScore = (newPoints: number) => {
+  score = newPoints;
+  if (scoreElement && scoreElement instanceof HTMLSpanElement) {
+    scoreElement.innerText = score.toString();
+  }
+};
+
+const checkGame = () => {
+  if (score === 7.5) {
+    winGame();
+  } else if (score > 7.5) {
+    gameOver();
+  }
+};
+
+const winGame = () => {
+  updateMessage("Has ganado!");
+  if (botonPedirCarta && botonPedirCarta instanceof HTMLButtonElement) {
+    disableOrEnableButton(botonPedirCarta, true);
+  }
+};
+
+const gameOver = () => {
+  updateMessage("Has perdido!");
+  if (botonPedirCarta && botonPedirCarta instanceof HTMLButtonElement) {
+    disableOrEnableButton(botonPedirCarta, false);
+  }
+};
+
+const playCard = () => {
+  const randomNumber = generateRandomNumber();
+  const card = generateCardNumber(randomNumber);
+  const urlCard = getCardUrl(card);
+  printUrlCard(urlCard);
+  const point = getCardPoints(card);
+  const points = sumPoints(point);
+  setScore(points);
+  checkGame();
+};
+
+const disableOrEnableButton = (
+  button: HTMLButtonElement,
+  disable: boolean
+): void => {
+  button.disabled = disable;
+};
+
+const plantarse = () => {
   if (score < 4) {
     updateMessage("Has sido muy conservador");
   } else if (score === 5) {
@@ -130,28 +154,20 @@ function plantarse(): void {
     updateMessage("Casi casi...");
   }
   if (botonPedirCarta && botonPedirCarta instanceof HTMLButtonElement) {
-    botonPedirCarta.disabled = true;
+    disableOrEnableButton(botonPedirCarta, true);
   }
-}
+};
 
-function restartGame(): void {
-  score = 0;
-  let scoreElement = document.getElementById("puntuacion");
-  if (scoreElement && scoreElement instanceof HTMLSpanElement) {
-    scoreElement.innerText = score.toString();
-  }
-  let cardElement = document.getElementById("card") as HTMLImageElement;
-  if (cardElement && cardElement instanceof HTMLImageElement) {
-    cardElement.src =
-      "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg";
-  }
+const restartGame = () => {
+  setScore(0);
+  printUrlCard(
+    "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg"
+  );
+  updateMessage("");
   if (botonPedirCarta && botonPedirCarta instanceof HTMLButtonElement) {
-    botonPedirCarta.disabled = false;
+    disableOrEnableButton(botonPedirCarta, false);
   }
-  if (messageElement && messageElement instanceof HTMLSpanElement) {
-    messageElement.innerText = "";
-  }
-}
+};
 
 if (botonPedirCarta && botonPedirCarta instanceof HTMLButtonElement) {
   botonPedirCarta.addEventListener("click", () => {
