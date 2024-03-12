@@ -1,9 +1,11 @@
 export interface Game {
   score: number;
+  state: "playing" | "win" | "lose" | "stop";
 }
 
 export const game: Game = {
   score: 0,
+  state: "stop",
 };
 
 export const getCardUrl = (card: number) => {

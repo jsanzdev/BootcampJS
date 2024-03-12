@@ -9,11 +9,11 @@ import {
 } from "./ui";
 import { game, getCardUrl } from "./model";
 
-const generateRandomNumber = (): number => {
+export const generateRandomNumber = (): number => {
   return Math.floor(Math.random() * 10) + 1;
 };
 
-const generateCardNumber = (randomNumber: number) => {
+export const generateCardNumber = (randomNumber: number) => {
   if (randomNumber > 7) {
     randomNumber += 2;
   }
@@ -21,7 +21,7 @@ const generateCardNumber = (randomNumber: number) => {
   return randomNumber;
 };
 
-const getCardPoints = (card: number) => {
+export const getCardPoints = (card: number) => {
   if (card > 7) {
     return 0.5;
   }
@@ -29,11 +29,11 @@ const getCardPoints = (card: number) => {
   return card;
 };
 
-const sumPoints = (point: number) => {
+export const sumPoints = (point: number) => {
   return game.score + point;
 };
 
-const checkGame = () => {
+export const checkGame = () => {
   if (game.score === 7.5) {
     winGame();
   } else if (game.score > 7.5) {
@@ -42,6 +42,7 @@ const checkGame = () => {
 };
 
 export const playCard = () => {
+  game.state = "playing";
   const randomNumber = generateRandomNumber();
   const card = generateCardNumber(randomNumber);
   const urlCard = getCardUrl(card);
@@ -53,6 +54,7 @@ export const playCard = () => {
 };
 
 export const plantarse = () => {
+  game.state = "stop";
   if (game.score < 4) {
     updateMessage("Has sido muy conservador");
   } else if (game.score === 5) {
@@ -69,6 +71,7 @@ export const plantarse = () => {
 };
 
 export const restartGame = () => {
+  game.state = "stop";
   setScore(0);
   printUrlCard(
     "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg"

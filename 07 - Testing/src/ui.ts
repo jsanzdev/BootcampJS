@@ -47,6 +47,7 @@ export const setScore = (newPoints: number) => {
 };
 
 export const winGame = () => {
+  game.state = "win";
   updateMessage("Has ganado!");
   if (
     htmlObjects.botonPedirCarta &&
@@ -57,6 +58,7 @@ export const winGame = () => {
 };
 
 export const gameOver = () => {
+  game.state = "lose";
   updateMessage("Has perdido!");
   if (
     htmlObjects.botonPedirCarta &&
