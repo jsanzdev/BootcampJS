@@ -37,3 +37,6 @@ Para seguir practicando vamos a añadir dos casos más:
 2. En el caso de que el jugador haya obtenido una carta, debemos de haber creado una función que devuelva el valor de esa carta. Al igual que en el caso anterior, se van a realizar pruebas unitarias para comprobar que la función se comporta como se espera en diferentes situaciones.
 
 ## Solucion
+
+1. Usando vitest, creamos tests para comprobar que las funciones funcionan correctamente. La mayoria de funciones cambian el Score o devuelven un numero para la carta, esas fueron faciles de setear.
+2. Para chequear funciones como gameOver, winGame he tenido que añadir un parametro al modelo game para definir el estado del juego. Usando el estado puedo testear si el jugador gana, pierde, se planta o reinicia el juego.
