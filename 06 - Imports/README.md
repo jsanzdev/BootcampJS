@@ -21,6 +21,6 @@ En esta práctica vamos a refactorizar el código para que sea más mantenible y
 
 ## Solucion.
 
-1. He creado los archivos motor, ui, types y model.
+1. He creado los archivos motor, ui y model.
 2. He pasado el codigo que corresponde a motor, ui, types y model a sus respectivos archivos.
 3. Usando los errores de TypeScript me he ido guiando para solucionar los errores que han ido saliendo.
