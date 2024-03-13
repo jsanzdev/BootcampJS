@@ -3,26 +3,6 @@ import { pacientes, Pacientes, NumeroPacientesPorEspecialidad } from "./model";
 
 console.log(pacientes);
 
-const cuentaPacientesPorEspecialidad = (
-  pacientes: Pacientes[]
-): NumeroPacientesPorEspecialidad => {
-  return pacientes.reduce(
-    (acc, paciente) => {
-      if (paciente.especialidad === "Medico de familia") {
-        acc.medicoDeFamilia++;
-      } else if (paciente.especialidad === "Pediatra") {
-        acc.pediatria++;
-      } else {
-        acc.cardiologia++;
-      }
-      return acc;
-    },
-    { medicoDeFamilia: 0, pediatria: 0, cardiologia: 0 }
-  );
-};
-
-console.log(cuentaPacientesPorEspecialidad(pacientes));
-
 const obtenPacientesAsignadosAPediatria = (
   pacientes: Pacientes[]
 ): Pacientes[] => {
@@ -81,14 +61,38 @@ const reasignaPacientesAMedicoFamilia = (
 console.log(reasignaPacientesAMedicoFamilia(pacientes));
 
 const HayPacientesDePediatria = (pacientes: Pacientes[]): boolean => {
+  let hayPacientesDePedriatria = false;
   pacientes.forEach((paciente) => {
     if (paciente.especialidad === "Pediatra") {
-      return true;
-    } else {
-      return false;
+      hayPacientesDePedriatria = true;
     }
   });
-  return false;
+  return hayPacientesDePedriatria;
 };
 
 console.log(HayPacientesDePediatria(pacientes));
+
+const cuentaPacientesPorEspecialidad = (
+  pacientes: Pacientes[]
+): NumeroPacientesPorEspecialidad => {
+  let medicoDeFamilia = 0;
+  let pediatria = 0;
+  let cardiologia = 0;
+  pacientes.forEach((paciente) => {
+    if (paciente.especialidad === "Medico de familia") {
+      medicoDeFamilia++;
+    } else if (paciente.especialidad === "Pediatra") {
+      pediatria++;
+    } else {
+      cardiologia++;
+    }
+  });
+  const numeroPacientesPorEspecialidad: NumeroPacientesPorEspecialidad = {
+    medicoDeFamilia: medicoDeFamilia,
+    pediatria: pediatria,
+    cardiologia: cardiologia,
+  };
+  return numeroPacientesPorEspecialidad;
+};
+
+console.log(cuentaPacientesPorEspecialidad(pacientes));
