@@ -26,7 +26,13 @@ console.log(cuentaPacientesPorEspecialidad(pacientes));
 const obtenPacientesAsignadosAPediatria = (
   pacientes: Pacientes[]
 ): Pacientes[] => {
-  return pacientes.filter((paciente) => paciente.especialidad === "Pediatra");
+  let pacientesPediatra: Pacientes[] = [];
+  pacientes.forEach((paciente) => {
+    if (paciente.especialidad === "Pediatra") {
+      pacientesPediatra.push(paciente);
+    }
+  });
+  return pacientesPediatra;
 };
 
 console.log(obtenPacientesAsignadosAPediatria(pacientes));
@@ -34,8 +40,14 @@ console.log(obtenPacientesAsignadosAPediatria(pacientes));
 const obtenPacientesAsignadosAPediatriaYMenorDeDiezAnios = (
   pacientes: Pacientes[]
 ): Pacientes[] => {
+  let pacientesPedriataMenores: Pacientes[] = [];
   const pacientesPediatra = obtenPacientesAsignadosAPediatria(pacientes);
-  return pacientesPediatra.filter((paciente) => paciente.edad < 10);
+  pacientesPediatra.forEach((paciente) => {
+    if (paciente.edad < 10) {
+      pacientesPedriataMenores.push(paciente);
+    }
+  });
+  return pacientesPedriataMenores;
 };
 
 console.log(obtenPacientesAsignadosAPediatriaYMenorDeDiezAnios(pacientes));
@@ -56,18 +68,27 @@ console.log(activarProtocoloUrgencia(pacientes));
 const reasignaPacientesAMedicoFamilia = (
   pacientes: Pacientes[]
 ): Pacientes[] => {
-  return pacientes.map((paciente) => {
+  let pacientesMedicoFamilia: Pacientes[] = [];
+  pacientes.forEach((paciente) => {
     if (paciente.especialidad === "Pediatra") {
-      return { ...paciente, especialidad: "Medico de familia" };
+      paciente.especialidad = "Medico de familia";
+      pacientesMedicoFamilia.push(paciente);
     }
-    return paciente;
   });
+  return pacientesMedicoFamilia;
 };
 
 console.log(reasignaPacientesAMedicoFamilia(pacientes));
 
 const HayPacientesDePediatria = (pacientes: Pacientes[]): boolean => {
-  return pacientes.some((paciente) => paciente.especialidad === "Pediatra");
+  pacientes.forEach((paciente) => {
+    if (paciente.especialidad === "Pediatra") {
+      return true;
+    } else {
+      return false;
+    }
+  });
+  return false;
 };
 
 console.log(HayPacientesDePediatria(pacientes));
