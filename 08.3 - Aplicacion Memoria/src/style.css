@@ -95,3 +95,22 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.tablero {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1em;
+  margin-top: 2em;
+}
+
+.carta {
+  display: flex;
+  place-items: center;
+  justify-content: center;
+  height: 8em;
+  width: 8em;
+  border-radius: 8px;
+  background-color: cyan;
+  cursor: pointer;
+  transition: transform 0.25s;
+}
