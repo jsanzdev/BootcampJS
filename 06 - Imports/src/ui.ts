@@ -1,4 +1,10 @@
-import { game } from "./model";
+import { game, getCardUrl } from "./model";
+import {
+  generateCardNumber,
+  generateRandomNumber,
+  getCardPoints,
+  sumPoints,
+} from "./motor";
 
 interface HTMLObjects {
   scoreElement: HTMLSpanElement | null;
@@ -18,7 +24,7 @@ export const htmlObjects: HTMLObjects = {
   cardElement: document.getElementById("card"),
 };
 
-export const printUrlCard = (urlCard: string) => {
+const printUrlCard = (urlCard: string) => {
   if (
     htmlObjects.cardElement &&
     htmlObjects.cardElement instanceof HTMLImageElement
@@ -27,7 +33,7 @@ export const printUrlCard = (urlCard: string) => {
   }
 };
 
-export const updateMessage = (message: string) => {
+const updateMessage = (message: string) => {
   if (
     htmlObjects.messageElement &&
     htmlObjects.messageElement instanceof HTMLSpanElement
@@ -36,7 +42,7 @@ export const updateMessage = (message: string) => {
   }
 };
 
-export const setScore = (newPoints: number) => {
+const setScore = (newPoints: number) => {
   game.score = newPoints;
   if (
     htmlObjects.scoreElement &&
@@ -46,7 +52,7 @@ export const setScore = (newPoints: number) => {
   }
 };
 
-export const winGame = () => {
+const winGame = () => {
   updateMessage("Has ganado!");
   if (
     htmlObjects.botonPedirCarta &&
@@ -56,7 +62,7 @@ export const winGame = () => {
   }
 };
 
-export const gameOver = () => {
+const gameOver = () => {
   updateMessage("Has perdido!");
   if (
     htmlObjects.botonPedirCarta &&
@@ -66,9 +72,58 @@ export const gameOver = () => {
   }
 };
 
-export const disableOrEnableButton = (
+const disableOrEnableButton = (
   button: HTMLButtonElement,
   disable: boolean
 ): void => {
   button.disabled = disable;
+};
+
+export const playCard = () => {
+  const randomNumber = generateRandomNumber();
+  const card = generateCardNumber(randomNumber);
+  const urlCard = getCardUrl(card);
+  printUrlCard(urlCard);
+  const point = getCardPoints(card);
+  const points = sumPoints(point);
+  setScore(points);
+  checkGame();
+};
+
+export const plantarse = () => {
+  if (game.score < 4) {
+    updateMessage("Has sido muy conservador");
+  } else if (game.score === 5) {
+    updateMessage("Te ha entrado el canguelo eh?");
+  } else if (game.score === 6 || game.score === 7) {
+    updateMessage("Casi casi...");
+  }
+  if (
+    htmlObjects.botonPedirCarta &&
+    htmlObjects.botonPedirCarta instanceof HTMLButtonElement
+  ) {
+    disableOrEnableButton(htmlObjects.botonPedirCarta, true);
+  }
+};
+
+export const restartGame = () => {
+  setScore(0);
+  printUrlCard(
+    "https://raw.githubusercontent.com/Lemoncode/fotos-ejemplos/main/cartas/back.jpg"
+  );
+  updateMessage("");
+  if (
+    htmlObjects.botonPedirCarta &&
+    htmlObjects.botonPedirCarta instanceof HTMLButtonElement
+  ) {
+    disableOrEnableButton(htmlObjects.botonPedirCarta, false);
+  }
+};
+
+export const checkGame = () => {
+  if (game.score === 7.5) {
+    winGame();
+  } else if (game.score > 7.5) {
+    gameOver();
+  }
 };

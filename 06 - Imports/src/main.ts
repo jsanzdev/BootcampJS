@@ -1,6 +1,5 @@
 import "./style.css";
-import { playCard, plantarse, restartGame } from "./motor";
-import { htmlObjects } from "./ui";
+import { htmlObjects, playCard, plantarse, restartGame } from "./ui";
 
 if (
   htmlObjects.botonPedirCarta &&
