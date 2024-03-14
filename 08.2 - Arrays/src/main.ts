@@ -31,9 +31,12 @@ console.log(activarProtocoloUrgencia(pacientes));
 const reasignaPacientesAMedicoFamilia = (
   pacientes: Pacientes[]
 ): Pacientes[] => {
-  return pacientes.filter(
-    (paciente) => paciente.especialidad === "Medico de familia"
-  );
+  return pacientes.map((paciente) => {
+    if (paciente.especialidad === "Pediatra") {
+      paciente.especialidad = "Medico de familia";
+    }
+    return paciente;
+  });
 };
 
 console.log(reasignaPacientesAMedicoFamilia(pacientes));

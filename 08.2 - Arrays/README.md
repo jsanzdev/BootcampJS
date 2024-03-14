@@ -188,7 +188,7 @@ const cuentaPacientesPorEspecialidad = (
 
 ## Apartado 1
 
-a) Creamos un nuevo array y utilizando un forEach, asignamos pacientes al nuevo array si son de la especialidad _Pediatria_
+a) Usando filter devolvemos un array con los pacientes de _Pediatria_
 
 Firma de la función:
 
@@ -196,13 +196,7 @@ Firma de la función:
 const obtenPacientesAsignadosAPediatria = (
   pacientes: Pacientes[]
 ): Pacientes[] => {
-  let pacientesPediatra: Pacientes[] = [];
-  pacientes.forEach((paciente) => {
-    if (paciente.especialidad === "Pediatra") {
-      pacientesPediatra.push(paciente);
-    }
-  });
-  return pacientesPediatra;
+  return pacientes.filter((paciente) => paciente.especialidad === "Pediatra");
 };
 ```
 
@@ -212,66 +206,47 @@ b) Usando la funcion anterior, ya tenemos el primer filtro, usamos el mismo meto
 const obtenPacientesAsignadosAPediatriaYMenorDeDiezAnios = (
   pacientes: Pacientes[]
 ): Pacientes[] => {
-  let pacientesPedriataMenores: Pacientes[] = [];
-  const pacientesPediatra = obtenPacientesAsignadosAPediatria(pacientes);
-  pacientesPediatra.forEach((paciente) => {
-    if (paciente.edad < 10) {
-      pacientesPedriataMenores.push(paciente);
-    }
-  });
-  return pacientesPedriataMenores;
+  let pacientesPediatria = obtenPacientesAsignadosAPediatria(pacientes);
+  return pacientesPediatria.filter((paciente) => paciente.edad < 10);
 };
 ```
 
 ## Apartado 2
 
-Usando un forEach, chequeamos los pacientes, si cualquiera cumple los requisitos la variable activarProtocolo se vuelve true.
+Usando some, chequeamos si hay algun paciente que cumpla las condiciones y retornamos si es true or false
 
 ```
 const activarProtocoloUrgencia = (pacientes: Pacientes[]): boolean => {
-  let activarProctolo = false;
-  pacientes.forEach((paciente) => {
-    if (paciente.temperatura > 39 && paciente.frecuenciaCardiaca > 100) {
-      activarProctolo = true;
-    }
-  });
-
-  return activarProctolo;
+  return pacientes.some(
+    (paciente) => paciente.frecuenciaCardiaca > 100 && paciente.temperatura > 39
+  );
 };
 ```
 
 ## Apartado 3
 
-Usando un forEach chequeamos si hay algun paciente de _Pediatria_ le cambiamos el valor de asignacion de especialidad.
+Usando un .map sobre el array chequeamos si hay algun paciente de _Pediatria_ le cambiamos el valor de asignacion de especialidad.
 
 ```
 const reasignaPacientesAMedicoFamilia = (
   pacientes: Pacientes[]
 ): Pacientes[] => {
-  let pacientesMedicoFamilia: Pacientes[] = [];
-  pacientes.forEach((paciente) => {
+  return pacientes.map((paciente) => {
     if (paciente.especialidad === "Pediatra") {
       paciente.especialidad = "Medico de familia";
-      pacientesMedicoFamilia.push(paciente);
     }
+    return paciente;
   });
-  return pacientesMedicoFamilia;
 };
 ```
 
 ## Apartado 4
 
-Misma solucion que el ejercicio 4, tenemos una variable bool hayPacientesDePediatria y con un forEach chequeamos si hay algun paciente para pediatria. Si es asi devolvemos un true.
+Misma solucion que el ejercicio 4, tenemos una variable bool hayPacientesDePediatria y con un .some() chequeamos si hay algun paciente para pediatria. Si es asi devolvemos un true.
 
 ```
 const HayPacientesDePediatria = (pacientes: Pacientes[]): boolean => {
-  let hayPacientesDePedriatria = false;
-  pacientes.forEach((paciente) => {
-    if (paciente.especialidad === "Pediatra") {
-      hayPacientesDePedriatria = true;
-    }
-  });
-  return hayPacientesDePedriatria;
+  return pacientes.some((paciente) => paciente.especialidad === "Pediatra");
 };
 ```
 
@@ -279,7 +254,7 @@ const HayPacientesDePediatria = (pacientes: Pacientes[]): boolean => {
 
 ## Apartado 5
 
-Creamos tres variables para cada especialidad. Usando un forEach pasamos por cada paciente chequeando la especialidad y aumentamos el numero de dicha especialidad.
+Creamos tres variables para cada especialidad. Usando un .filter creamos nuevos arrays solo con los pacientes en la especialidad.
 
 Despues creamos una variable numeroPacientesPorEspecialidad e la iniciamos usando las variables.
 
@@ -290,26 +265,24 @@ interface NumeroPacientesPorEspecialidad {
   cardiologia: number;
 }
 
-cconst cuentaPacientesPorEspecialidad = (
+const cuentaPacientesPorEspecialidad = (
   pacientes: Pacientes[]
 ): NumeroPacientesPorEspecialidad => {
-  let medicoDeFamilia = 0;
-  let pediatria = 0;
-  let cardiologia = 0;
-  pacientes.forEach((paciente) => {
-    if (paciente.especialidad === "Medico de familia") {
-      medicoDeFamilia++;
-    } else if (paciente.especialidad === "Pediatra") {
-      pediatria++;
-    } else {
-      cardiologia++;
-    }
-  });
+  let medicoDeFamilia = pacientes.filter(
+    (paciente) => paciente.especialidad === "Medico de familia"
+  ).length;
+  let pediatria = pacientes.filter(
+    (paciente) => paciente.especialidad === "Pediatra"
+  ).length;
+  let cardiologia = pacientes.filter(
+    (paciente) => paciente.especialidad === "Cardiólogo"
+  ).length;
   const numeroPacientesPorEspecialidad: NumeroPacientesPorEspecialidad = {
     medicoDeFamilia: medicoDeFamilia,
     pediatria: pediatria,
     cardiologia: cardiologia,
   };
+
   return numeroPacientesPorEspecialidad;
 };
 ```
