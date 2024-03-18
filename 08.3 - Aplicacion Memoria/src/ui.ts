@@ -78,3 +78,15 @@ const setIntentos = (tablero: Tablero) => {
     intentosSpan.innerText = tablero.intentos.toString();
   }
 };
+
+export const reiniciarPartida = (tablero: Tablero) => {
+  tablero.cartas.forEach((card) => {
+    card.estaVuelta = false;
+    card.encontrada = false;
+  });
+  cardsDiv.forEach((div) => {
+    div.style.backgroundImage = "";
+  });
+  tablero.intentos = 0;
+  tablero.estadoPartida = "PartidaNoIniciada";
+};
