@@ -6,9 +6,7 @@ import {
   reiniciarPartidaButton,
   reiniciarPartida,
 } from "./ui";
-import { iniciaPartida } from "./motor";
 
-iniciaPartida(tablero);
 drawCards(cardsDiv, tablero);
 
 if (
@@ -17,7 +15,5 @@ if (
 ) {
   reiniciarPartidaButton.addEventListener("click", () => {
     reiniciarPartida(tablero);
-    iniciaPartida(tablero);
-    drawCards(cardsDiv, tablero);
   });
 }

@@ -1,5 +1,10 @@
 import { Tablero } from "./model";
-import { voltearLaCarta, sonPareja, esPartidaCompleta } from "./motor";
+import {
+  voltearLaCarta,
+  sonPareja,
+  esPartidaCompleta,
+  iniciaPartida,
+} from "./motor";
 
 // we grab all de divs inside grid-card and fill it with cards.
 const gridCard = document.getElementById("card-grid") as HTMLDivElement;
@@ -29,6 +34,7 @@ export const drawCards = (
   ) {
     disableOrEnableButton(reiniciarPartidaButton, true);
   }
+  iniciaPartida(tablero);
   cardGridArray.forEach((div, index) => {
     // We assign to each div in cardGridArray a carta from the tablero
     div.id = tablero.cartas[index].idFoto.toString();
@@ -92,5 +98,8 @@ export const reiniciarPartida = (tablero: Tablero) => {
     div.style.backgroundImage = "";
   });
   tablero.intentos = 0;
+  setIntentos(tablero);
   tablero.estadoPartida = "PartidaNoIniciada";
+  iniciaPartida(tablero);
+  drawCards(cardsDiv, tablero);
 };
