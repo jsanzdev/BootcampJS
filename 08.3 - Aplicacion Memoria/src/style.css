@@ -112,10 +112,15 @@ button:focus-visible {
   border-radius: 8px;
   background-color: cyan;
   cursor: pointer;
-  transition: transform 0.25s;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
 }
 .card:hover {
   transform: scale(1.05);
+}
+
+.card.flipped {
+  transform: rotateY(180deg);
 }
 
 .flip {

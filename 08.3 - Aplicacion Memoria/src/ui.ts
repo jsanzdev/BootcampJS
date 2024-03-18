@@ -41,11 +41,13 @@ export const drawCards = (
       if (tablero.estadoPartida !== "PartidaCompleta") {
         if (tablero.estadoPartida === "CeroCartasLevantadas") {
           voltearLaCarta(tablero, index);
+          div.classList.add("flipped");
           div.style.backgroundImage = `url('${tablero.cartas[index].imagen}')`;
           tablero.estadoPartida = "UnaCartaLevantada";
           cardA = index;
         } else if (tablero.estadoPartida === "UnaCartaLevantada") {
           voltearLaCarta(tablero, index);
+          div.classList.add("flipped");
           div.style.backgroundImage = `url('${tablero.cartas[index].imagen}')`;
           tablero.estadoPartida = "DosCartasLevantadas";
           tablero.intentos++;
@@ -57,6 +59,8 @@ export const drawCards = (
             setTimeout(() => {
               div.style.backgroundImage = "";
               cardGridArray[cardA].style.backgroundImage = "";
+              div.classList.remove("flipped");
+              cardGridArray[cardA].classList.remove("flipped");
               tablero.estadoPartida = "CeroCartasLevantadas";
             }, 1000);
           }
