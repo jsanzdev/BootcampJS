@@ -3,7 +3,7 @@ import { Carta, Tablero } from "./model";
 /*
 En el motor nos va a hacer falta un método para barajar cartas
 */
-const barajarCartas = (cartas: Carta[]): Carta[] => {
+export const barajarCartas = (cartas: Carta[]): Carta[] => {
   for (let i = cartas.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [cartas[i], cartas[j]] = [cartas[j], cartas[i]];
@@ -14,7 +14,10 @@ const barajarCartas = (cartas: Carta[]): Carta[] => {
 /*
     Una carta se puede voltear si no está encontrada y no está ya volteada, o no hay dos cartas ya volteadas
   */
-const sePuedeVoltearLaCarta = (tablero: Tablero, indice: number): boolean => {
+export const sePuedeVoltearLaCarta = (
+  tablero: Tablero,
+  indice: number
+): boolean => {
   if (
     tablero.estadoPartida === "CeroCartasLevantadas" ||
     tablero.estadoPartida === "UnaCartaLevantada"
