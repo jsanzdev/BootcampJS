@@ -24,6 +24,31 @@ export const cardsDiv: HTMLDivElement[] = Array.from(
   gridCard.children
 ) as HTMLDivElement[];
 
+export const CompletarPartida = (tablero: Tablero): void => {
+  tablero.estadoPartida = "PartidaCompleta";
+  if (
+    reiniciarPartidaButton &&
+    reiniciarPartidaButton instanceof HTMLButtonElement
+  ) {
+    disableOrEnableButton(reiniciarPartidaButton, false);
+  }
+};
+
+const resetCards = (
+  div: HTMLDivElement,
+  cardA: number,
+  cardGridArray: HTMLDivElement[],
+  tablero: Tablero
+) => {
+  setTimeout(() => {
+    div.style.backgroundImage = "";
+    cardGridArray[cardA].style.backgroundImage = "";
+    div.classList.remove("flipped");
+    cardGridArray[cardA].classList.remove("flipped");
+    tablero.estadoPartida = "CeroCartasLevantadas";
+  }, 1000);
+};
+
 export const drawCards = (
   cardGridArray: HTMLDivElement[],
   tablero: Tablero
@@ -36,51 +61,46 @@ export const drawCards = (
   }
   iniciaPartida(tablero);
   cardGridArray.forEach((div, index) => {
-    // We assign to each div in cardGridArray a carta from the tablero
     div.id = tablero.cartas[index].idFoto.toString();
   });
-  // now we add the event listener to each card
+
   let cardA: number = 0;
-  cardGridArray.forEach((div, index) => {
-    div.addEventListener("click", () => {
-      // we call the function to flip the card and change the image of the card
-      if (tablero.estadoPartida !== "PartidaCompleta") {
+
+  if (!esPartidaCompleta(tablero)) {
+    cardGridArray.forEach((div, index) => {
+      div.addEventListener("click", () => {
+        // we call the function to flip the card and change the image of the card
         if (tablero.estadoPartida === "CeroCartasLevantadas") {
           voltearLaCarta(tablero, index);
           div.classList.add("flipped");
           div.style.backgroundImage = `url('${tablero.cartas[index].imagen}')`;
           tablero.estadoPartida = "UnaCartaLevantada";
           cardA = index;
+          console.log(tablero.estadoPartida);
         } else if (tablero.estadoPartida === "UnaCartaLevantada") {
           voltearLaCarta(tablero, index);
           div.classList.add("flipped");
           div.style.backgroundImage = `url('${tablero.cartas[index].imagen}')`;
           tablero.estadoPartida = "DosCartasLevantadas";
           tablero.intentos++;
+          console.log(tablero.estadoPartida);
           setIntentos(tablero);
-          esPartidaCompleta(tablero);
+          console.log(tablero.estadoPartida);
           if (sonPareja(cardA, index, tablero)) {
             tablero.estadoPartida = "CeroCartasLevantadas";
+            console.log(tablero.estadoPartida);
+            if (esPartidaCompleta(tablero)) {
+              console.log("Completando partida....");
+              CompletarPartida(tablero);
+              console.log(tablero.estadoPartida);
+            }
           } else {
-            setTimeout(() => {
-              div.style.backgroundImage = "";
-              cardGridArray[cardA].style.backgroundImage = "";
-              div.classList.remove("flipped");
-              cardGridArray[cardA].classList.remove("flipped");
-              tablero.estadoPartida = "CeroCartasLevantadas";
-            }, 1000);
+            resetCards(div, cardA, cardGridArray, tablero);
           }
         }
-      } else {
-        if (
-          reiniciarPartidaButton &&
-          reiniciarPartidaButton instanceof HTMLButtonElement
-        ) {
-          disableOrEnableButton(reiniciarPartidaButton, false);
-        }
-      }
+      });
     });
-  });
+  }
 };
 
 const setIntentos = (tablero: Tablero) => {

@@ -90,7 +90,6 @@ const parejaNoEncontrada = (
     Esto lo podemos comprobar o bien utilizando every, o bien utilizando un contador (cartasEncontradas)
   */
 export const esPartidaCompleta = (tablero: Tablero): boolean => {
-  tablero.estadoPartida = "PartidaCompleta";
   return tablero.cartas.every((carta) => carta.encontrada);
 };
 
