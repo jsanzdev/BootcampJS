@@ -7,7 +7,7 @@ import {
   sePuedeVoltearLaCarta,
 } from "./motor";
 
-// we grab all de divs inside grid-card and fill it with cards.
+// HTML DIVS
 const gridCard = document.getElementById("card-grid") as HTMLDivElement;
 const gameMessage = document.getElementById("game-message");
 const intentosSpan = document.getElementById("numero-intentos");
@@ -21,17 +21,16 @@ const disableOrEnableButton = (
   button.disabled = disable;
 };
 
-//Grab all the divs from grid-card and fill them with cards
 export const cardsDiv: HTMLDivElement[] = Array.from(
   gridCard.children
 ) as HTMLDivElement[];
 
-const updateGameMessage = (message: string): void => {
+const updateGameMessage = (message: string, timeout: number): void => {
   if (gameMessage && gameMessage instanceof HTMLSpanElement) {
     gameMessage.innerText = message;
     setTimeout(() => {
       gameMessage.innerText = "";
-    }, 3000);
+    }, timeout);
   }
 };
 
@@ -43,7 +42,7 @@ export const CompletarPartida = (tablero: Tablero): void => {
   ) {
     disableOrEnableButton(reiniciarPartidaButton, false);
   }
-  updateGameMessage("¡Enhorabuena! Has completado la partida");
+  updateGameMessage("¡Enhorabuena! Has completado la partida!", 200000);
 };
 
 const resetCards = (
@@ -71,6 +70,7 @@ export const drawCards = (
   ) {
     disableOrEnableButton(reiniciarPartidaButton, true);
   }
+
   iniciaPartida(tablero);
   cardGridArray.forEach((div, index) => {
     div.id = tablero.cartas[index].idFoto.toString();
@@ -81,7 +81,6 @@ export const drawCards = (
   if (!esPartidaCompleta(tablero)) {
     cardGridArray.forEach((div, index) => {
       div.addEventListener("click", () => {
-        // we call the function to flip the card and change the image of the card
         if (sePuedeVoltearLaCarta(tablero, index)) {
           if (tablero.estadoPartida === "CeroCartasLevantadas") {
             voltearLaCarta(tablero, index);
@@ -112,7 +111,7 @@ export const drawCards = (
             }
           }
         } else {
-          updateGameMessage("No puedes voltear esta carta");
+          updateGameMessage("No puedes voltear esta carta", 4000);
         }
       });
     });
