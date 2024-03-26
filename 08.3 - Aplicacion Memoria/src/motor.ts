@@ -14,6 +14,7 @@ export const barajarCartas = (cartas: Carta[]): Carta[] => {
 /*
     Una carta se puede voltear si no está encontrada y no está ya volteada, o no hay dos cartas ya volteadas
   */
+//TODO: Refactorizar para hacer mas sencillo.
 export const sePuedeVoltearLaCarta = (
   tablero: Tablero,
   indice: number
@@ -34,14 +35,15 @@ export const sePuedeVoltearLaCarta = (
   return false;
 };
 
+//TODO: Quitar el cambio de estado de la partida de aqui.
 export const voltearLaCarta = (tablero: Tablero, indice: number): void => {
   if (sePuedeVoltearLaCarta(tablero, indice)) {
     tablero.cartas[indice].estaVuelta = true;
-    if (tablero.estadoPartida === "CeroCartasLevantadas") {
-      tablero.estadoPartida = "UnaCartaLevantada";
-    } else {
-      tablero.estadoPartida = "DosCartasLevantadas";
-    }
+    // if (tablero.estadoPartida === "CeroCartasLevantadas") {
+    //   tablero.estadoPartida = "UnaCartaLevantada";
+    // } else {
+    //   tablero.estadoPartida = "DosCartasLevantadas";
+    // }
   }
 };
 

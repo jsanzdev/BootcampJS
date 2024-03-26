@@ -13,6 +13,7 @@ if (
   reiniciarPartidaButton &&
   reiniciarPartidaButton instanceof HTMLButtonElement
 ) {
+  //* Mover al UI
   reiniciarPartidaButton.addEventListener("click", () => {
     reiniciarPartida(tablero);
   });
