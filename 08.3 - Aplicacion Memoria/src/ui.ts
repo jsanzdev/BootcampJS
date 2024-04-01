@@ -40,6 +40,12 @@ const updateGameMessage = (message: string, timeout: number): void => {
   }
 };
 
+const updateIntentosDiv = (tablero: Tablero) => {
+  if (intentosSpan && intentosSpan instanceof HTMLSpanElement) {
+    intentosSpan.innerText = tablero.intentos.toString();
+  }
+};
+
 export const CompletarPartida = (tablero: Tablero): void => {
   tablero.estadoPartida = "PartidaCompleta";
   if (
@@ -124,8 +130,6 @@ export const playCards = (
   ) {
     disableOrEnableButton(reiniciarPartidaButton, true);
   }
-
-  iniciaPartida(tablero);
   cardGridArray.forEach((div, index) => {
     div.id = tablero.cartas[index].idFoto.toString();
   });
@@ -135,7 +139,6 @@ export const playCards = (
     tablero.estadoPartida === "DosCartasLevantadas"
   ) {
     cardGridArray.forEach((div, index) => {
-      //TODO: No dejar hacer click si la carta no se puede voltear o el estado de la partida no deja voltear la carta.
       if (cardA === 0 || cardB === 0) {
         div.addEventListener("click", () => {
           playCard(tablero, index, cardGridArray);
@@ -145,18 +148,10 @@ export const playCards = (
   }
 };
 
-//TODO: Crear funcion de inicializar partida.
-
 export const startGame = (tablero: Tablero) => {
   iniciaPartida(tablero);
   playCards(cardsDiv, tablero);
   reiniciarPartidaButtonFunction(tablero);
-};
-
-const updateIntentosDiv = (tablero: Tablero) => {
-  if (intentosSpan && intentosSpan instanceof HTMLSpanElement) {
-    intentosSpan.innerText = tablero.intentos.toString();
-  }
 };
 
 export const reiniciarPartida = (tablero: Tablero) => {
