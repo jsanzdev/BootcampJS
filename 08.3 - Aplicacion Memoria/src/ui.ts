@@ -3,7 +3,7 @@ import {
   voltearLaCarta,
   sonPareja,
   esPartidaCompleta,
-  iniciaPartida,
+  inicializarTablero,
   sePuedeVoltearLaCarta,
 } from "./motor";
 
@@ -44,6 +44,11 @@ const updateIntentosDiv = (tablero: Tablero) => {
   if (intentosSpan && intentosSpan instanceof HTMLSpanElement) {
     intentosSpan.innerText = tablero.intentos.toString();
   }
+};
+
+const aumentarIntentos = (tablero: Tablero) => {
+  tablero.intentos++;
+  updateIntentosDiv(tablero);
 };
 
 export const CompletarPartida = (tablero: Tablero): void => {
@@ -95,16 +100,17 @@ const playCard = (
   cardGridArray: HTMLDivElement[]
 ) => {
   if (sePuedeVoltearLaCarta(tablero, index)) {
+    // Play Card A
     if (tablero.estadoPartida === "CeroCartasLevantadas") {
       cardA = index;
       playCardUI(cardA, cardGridArray, tablero);
       tablero.estadoPartida = "UnaCartaLevantada";
     } else if (tablero.estadoPartida === "UnaCartaLevantada") {
+      // Play Card B
       cardB = index;
       playCardUI(cardB, cardGridArray, tablero);
       tablero.estadoPartida = "DosCartasLevantadas";
-      tablero.intentos++;
-      updateIntentosDiv(tablero);
+      aumentarIntentos(tablero);
       if (sonPareja(cardA, index, tablero)) {
         tablero.estadoPartida = "CeroCartasLevantadas";
         if (esPartidaCompleta(tablero)) {
@@ -119,21 +125,13 @@ const playCard = (
   }
 };
 
-//TODO: Esta funcion no tiene sentido, mover el inicializar fuera. Simplifar mas la funcion.
 export const playCards = (
   cardGridArray: HTMLDivElement[],
   tablero: Tablero
 ) => {
-  if (
-    reiniciarPartidaButton &&
-    reiniciarPartidaButton instanceof HTMLButtonElement
-  ) {
-    disableOrEnableButton(reiniciarPartidaButton, true);
-  }
   cardGridArray.forEach((div, index) => {
     div.id = tablero.cartas[index].idFoto.toString();
   });
-
   if (
     !esPartidaCompleta(tablero) ||
     tablero.estadoPartida === "DosCartasLevantadas"
@@ -149,7 +147,13 @@ export const playCards = (
 };
 
 export const startGame = (tablero: Tablero) => {
-  iniciaPartida(tablero);
+  if (
+    reiniciarPartidaButton &&
+    reiniciarPartidaButton instanceof HTMLButtonElement
+  ) {
+    disableOrEnableButton(reiniciarPartidaButton, true);
+  }
+  inicializarTablero(tablero);
   playCards(cardsDiv, tablero);
   reiniciarPartidaButtonFunction(tablero);
 };
@@ -165,7 +169,7 @@ export const reiniciarPartida = (tablero: Tablero) => {
   tablero.intentos = 0;
   updateIntentosDiv(tablero);
   tablero.estadoPartida = "PartidaNoIniciada";
-  iniciaPartida(tablero);
+  inicializarTablero(tablero);
   playCards(cardsDiv, tablero);
 };
 

@@ -86,7 +86,7 @@ export const esPartidaCompleta = (tablero: Tablero): boolean => {
   Iniciar partida
   */
 
-export const iniciaPartida = (tablero: Tablero): void => {
+export const inicializarTablero = (tablero: Tablero): void => {
   barajarCartas(tablero.cartas);
   tablero.estadoPartida = "CeroCartasLevantadas";
 };

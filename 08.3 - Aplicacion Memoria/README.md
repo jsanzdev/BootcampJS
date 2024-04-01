@@ -34,10 +34,10 @@ Creamos el index.html, con la estructura del juego, haciendo un div ```card-grid
 
 En el archivo ```ui.ts``` creamos una variable ```gridCard``` que la usaremos para almacenar el array de divs para nuestras cartas.
 
-Una vez tenemos nuestro array de divs de cartas, creamos una funcion ```drawCards```, esta es la funcion que maneja la logica de las parejas y del juego. Primero he programado la funcion completa, paso por paso, sin ninguna abstraccion.
+Usando dos variables globales cardA y cardB hacemos seguimiento del index de cada carta y mientras estas variables contengan un index no igual a cero no se podran voltear mas de dos cartas.
 
-El resultado ha sido una funcion bastante complicada y he intentado abstraer lo maximo posible de ella mediante pequenyas funciones como ```CompletarPartida``` o ```updateGameMessage```.
+```StarGame``` iniciara la partida, cargando todos los elementos necesarios como ```inicializarTablero``` o cargar el game loop ```playCards```.
 
-*Nota, si abstraia cualquier otra cosa de la logica, la funcion se rompia y ya no habia limitacion al girar las cartas.*
+```playCards``` contiene la logica del juego en si, llamando a funciones como ```playCard``` que se encarga de voltear las cartas y llamar a ```playCardUI``` que se encarga de hacer los cambios en el DOM para mostrar al jugador lo que esta ocurriendo.
 
 Una vez la logica del juego estaba bien, he añadido otros elementos como el estilo para la animacion de las cartas, numero de intentos o el boton de reiniciar partida.

@@ -5,7 +5,7 @@ import {
   voltearLaCarta,
   sonPareja,
   esPartidaCompleta,
-  iniciaPartida,
+  inicializarTablero,
 } from "./motor";
 
 describe("Chequeamos Operaciones de cartas.", () => {
@@ -43,7 +43,7 @@ describe("Chequeamos el estado de la partida.", () => {
   });
 
   it('iniciaPartida debe barajar las cartas y setear la partida en "CeroCartasLevantadas"', () => {
-    iniciaPartida(tablero);
+    inicializarTablero(tablero);
     expect(tablero.cartas).not.toEqual(cartas);
     expect(tablero.estadoPartida).toBe("CeroCartasLevantadas");
   });
