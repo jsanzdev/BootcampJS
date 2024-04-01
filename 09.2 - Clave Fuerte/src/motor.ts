@@ -1,33 +1,6 @@
 import { PasswordValidation } from "./model";
 
-export function validarpassword(
-  password: string,
-  username: string,
-  commonPasswords: string[]
-): PasswordValidation {
-  const validaciones = [
-    tieneLongitudMinima(password),
-    tieneMayusculasYMinusculas(password),
-    tieneNumeros(password),
-    tieneCaracteresEspeciales(password),
-    tieneNombreUsuario(password, username),
-    tienePalabrasComunes(password, commonPasswords),
-  ];
-
-  const validacionFallida = validaciones.find(
-    (validacion) => !validacion.esValida
-  );
-
-  if (validacionFallida) {
-    return validacionFallida;
-  } else {
-    return {
-      esValida: true,
-    };
-  }
-}
-
-const tieneMayusculasYMinusculas = (password: string): PasswordValidation => {
+const containsUpperAndLowerCase = (password: string): PasswordValidation => {
   if (
     password.toLowerCase() === password ||
     password.toUpperCase() === password
@@ -43,7 +16,7 @@ const tieneMayusculasYMinusculas = (password: string): PasswordValidation => {
     };
   }
 };
-const tieneNumeros = (password: string): PasswordValidation => {
+const containsNumbers = (password: string): PasswordValidation => {
   if (!/[0-9]/.test(password)) {
     return {
       esValida: false,
@@ -55,7 +28,7 @@ const tieneNumeros = (password: string): PasswordValidation => {
     };
   }
 };
-const tieneCaracteresEspeciales = (password: string): PasswordValidation => {
+const containsSpecialCharacters = (password: string): PasswordValidation => {
   if (!/[^a-zA-Z0-9]/.test(password)) {
     return {
       esValida: false,
@@ -68,7 +41,7 @@ const tieneCaracteresEspeciales = (password: string): PasswordValidation => {
   }
 };
 
-const tieneLongitudMinima = (password: string): PasswordValidation => {
+const containsMinimumLength = (password: string): PasswordValidation => {
   if (password.length < 8) {
     return {
       esValida: false,
@@ -81,7 +54,7 @@ const tieneLongitudMinima = (password: string): PasswordValidation => {
   }
 };
 
-const tieneNombreUsuario = (
+const containsUsername = (
   nombreUsuario: string,
   password: string
 ): PasswordValidation => {
@@ -97,7 +70,7 @@ const tieneNombreUsuario = (
   }
 };
 
-const tienePalabrasComunes = (
+const containsCommonWords = (
   password: string,
   commonPasswords: string[]
 ): PasswordValidation => {
@@ -112,3 +85,29 @@ const tienePalabrasComunes = (
     };
   }
 };
+
+export function passwordValidation(
+  password: string,
+  username: string,
+  commonPasswords: string[]
+): PasswordValidation {
+  const validations = [
+    containsMinimumLength(password),
+    containsUpperAndLowerCase(password),
+    containsNumbers(password),
+    containsSpecialCharacters(password),
+    containsUsername(password, username),
+    containsCommonWords(password, commonPasswords),
+  ];
+
+  const failedValidations = validations.filter(
+    (validacion) => !validacion.esValida
+  );
+  if (failedValidations.length > 0) {
+    return failedValidations[0];
+  } else {
+    return {
+      esValida: true,
+    };
+  }
+}
