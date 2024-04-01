@@ -80,7 +80,9 @@ const playCardUI = (
   voltearLaCarta(tablero, index);
 };
 
-//*TODO: Refactorizar la funcion.
+/*
+  Funcion para jugar la carta. Esta funcion se encarga de voltear la carta y comprobar si es pareja o no. Usando variables globales para las cartas, es como llamamos a playCardUI para hacer los cambios en el DOM.
+*/
 const playCard = (
   tablero: Tablero,
   index: number,
@@ -128,8 +130,6 @@ export const playCards = (
     div.id = tablero.cartas[index].idFoto.toString();
   });
 
-  // let cardA: number = 0;
-
   if (
     !esPartidaCompleta(tablero) ||
     tablero.estadoPartida === "DosCartasLevantadas"
@@ -150,6 +150,7 @@ export const playCards = (
 export const startGame = (tablero: Tablero) => {
   iniciaPartida(tablero);
   playCards(cardsDiv, tablero);
+  reiniciarPartidaButtonFunction(tablero);
 };
 
 const updateIntentosDiv = (tablero: Tablero) => {
@@ -171,4 +172,16 @@ export const reiniciarPartida = (tablero: Tablero) => {
   tablero.estadoPartida = "PartidaNoIniciada";
   iniciaPartida(tablero);
   playCards(cardsDiv, tablero);
+};
+
+export const reiniciarPartidaButtonFunction = (tablero: Tablero) => {
+  if (
+    reiniciarPartidaButton &&
+    reiniciarPartidaButton instanceof HTMLButtonElement
+  ) {
+    //* Mover al UI
+    reiniciarPartidaButton.addEventListener("click", () => {
+      reiniciarPartida(tablero);
+    });
+  }
 };

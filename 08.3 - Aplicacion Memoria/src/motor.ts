@@ -31,11 +31,6 @@ export const sePuedeVoltearLaCarta = (
 export const voltearLaCarta = (tablero: Tablero, indice: number): void => {
   if (sePuedeVoltearLaCarta(tablero, indice)) {
     tablero.cartas[indice].estaVuelta = true;
-    // if (tablero.estadoPartida === "CeroCartasLevantadas") {
-    //   tablero.estadoPartida = "UnaCartaLevantada";
-    // } else {
-    //   tablero.estadoPartida = "DosCartasLevantadas";
-    // }
   }
 };
 
