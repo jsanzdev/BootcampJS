@@ -14,6 +14,12 @@ const intentosSpan = document.getElementById("numero-intentos");
 export const reiniciarPartidaButton =
   document.getElementById("reiniciar-button");
 
+/*
+  Dos variables para las cartas para que todas las funciones puedan acceder a ellas.
+*/
+let cardA = 0;
+let cardB = 0;
+
 const disableOrEnableButton = (
   button: HTMLButtonElement,
   disable: boolean
@@ -46,55 +52,58 @@ export const CompletarPartida = (tablero: Tablero): void => {
 };
 
 const resetCards = (
-  div: HTMLDivElement,
   cardA: number,
+  cardB: number,
   cardGridArray: HTMLDivElement[],
   tablero: Tablero
 ) => {
   setTimeout(() => {
-    div.style.backgroundImage = "";
     cardGridArray[cardA].style.backgroundImage = "";
-    div.classList.remove("flipped");
+    cardGridArray[cardB].style.backgroundImage = "";
     cardGridArray[cardA].classList.remove("flipped");
+    cardGridArray[cardB].classList.remove("flipped");
     tablero.estadoPartida = "CeroCartasLevantadas";
+    cardA = 0;
+    cardB = 0;
   }, 1000);
 };
 
+const playCardUI = (
+  index: number,
+  cardGridArray: HTMLDivElement[],
+  tablero: Tablero
+) => {
+  cardGridArray[index].classList.add("flipped");
+  cardGridArray[
+    index
+  ].style.backgroundImage = `url('${tablero.cartas[index].imagen}')`;
+  voltearLaCarta(tablero, index);
+};
+
 //*TODO: Refactorizar la funcion.
-const prueba = (
+const playCard = (
   tablero: Tablero,
   index: number,
-  div: HTMLDivElement,
   cardGridArray: HTMLDivElement[]
 ) => {
-  let cardA = 0;
   if (sePuedeVoltearLaCarta(tablero, index)) {
     if (tablero.estadoPartida === "CeroCartasLevantadas") {
-      voltearLaCarta(tablero, index);
-      div.classList.add("flipped");
-      div.style.backgroundImage = `url('${tablero.cartas[index].imagen}')`;
-      tablero.estadoPartida = "UnaCartaLevantada";
       cardA = index;
-      console.log(tablero.estadoPartida);
+      playCardUI(cardA, cardGridArray, tablero);
+      tablero.estadoPartida = "UnaCartaLevantada";
     } else if (tablero.estadoPartida === "UnaCartaLevantada") {
-      voltearLaCarta(tablero, index);
-      div.classList.add("flipped");
-      div.style.backgroundImage = `url('${tablero.cartas[index].imagen}')`;
+      cardB = index;
+      playCardUI(cardB, cardGridArray, tablero);
       tablero.estadoPartida = "DosCartasLevantadas";
       tablero.intentos++;
-      console.log(tablero.estadoPartida);
-      setIntentos(tablero);
-      console.log(tablero.estadoPartida);
+      updateIntentosDiv(tablero);
       if (sonPareja(cardA, index, tablero)) {
         tablero.estadoPartida = "CeroCartasLevantadas";
-        console.log(tablero.estadoPartida);
         if (esPartidaCompleta(tablero)) {
-          console.log("Completando partida....");
           CompletarPartida(tablero);
-          console.log(tablero.estadoPartida);
         }
       } else {
-        resetCards(div, cardA, cardGridArray, tablero);
+        resetCards(cardA, cardB, cardGridArray, tablero);
       }
     }
   } else {
@@ -102,10 +111,8 @@ const prueba = (
   }
 };
 
-//TODO: Crear funcion de inicializar partida.
-
 //TODO: Esta funcion no tiene sentido, mover el inicializar fuera. Simplifar mas la funcion.
-export const drawCards = (
+export const playCards = (
   cardGridArray: HTMLDivElement[],
   tablero: Tablero
 ) => {
@@ -123,17 +130,29 @@ export const drawCards = (
 
   // let cardA: number = 0;
 
-  if (!esPartidaCompleta(tablero)) {
+  if (
+    !esPartidaCompleta(tablero) ||
+    tablero.estadoPartida === "DosCartasLevantadas"
+  ) {
     cardGridArray.forEach((div, index) => {
       //TODO: No dejar hacer click si la carta no se puede voltear o el estado de la partida no deja voltear la carta.
-      div.addEventListener("click", () => {
-        prueba(tablero, index, div, cardGridArray);
-      });
+      if (cardA === 0 || cardB === 0) {
+        div.addEventListener("click", () => {
+          playCard(tablero, index, cardGridArray);
+        });
+      }
     });
   }
 };
 
-const setIntentos = (tablero: Tablero) => {
+//TODO: Crear funcion de inicializar partida.
+
+export const startGame = (tablero: Tablero) => {
+  iniciaPartida(tablero);
+  playCards(cardsDiv, tablero);
+};
+
+const updateIntentosDiv = (tablero: Tablero) => {
   if (intentosSpan && intentosSpan instanceof HTMLSpanElement) {
     intentosSpan.innerText = tablero.intentos.toString();
   }
@@ -148,8 +167,8 @@ export const reiniciarPartida = (tablero: Tablero) => {
     div.style.backgroundImage = "";
   });
   tablero.intentos = 0;
-  setIntentos(tablero);
+  updateIntentosDiv(tablero);
   tablero.estadoPartida = "PartidaNoIniciada";
   iniciaPartida(tablero);
-  drawCards(cardsDiv, tablero);
+  playCards(cardsDiv, tablero);
 };

@@ -1,13 +1,8 @@
 import "./style.css";
 import { tablero } from "./model";
-import {
-  cardsDiv,
-  drawCards,
-  reiniciarPartidaButton,
-  reiniciarPartida,
-} from "./ui";
+import { startGame, reiniciarPartidaButton, reiniciarPartida } from "./ui";
 
-drawCards(cardsDiv, tablero);
+startGame(tablero);
 
 if (
   reiniciarPartidaButton &&

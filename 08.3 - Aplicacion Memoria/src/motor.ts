@@ -14,25 +14,17 @@ export const barajarCartas = (cartas: Carta[]): Carta[] => {
 /*
     Una carta se puede voltear si no está encontrada y no está ya volteada, o no hay dos cartas ya volteadas
   */
-//TODO: Refactorizar para hacer mas sencillo.
 export const sePuedeVoltearLaCarta = (
   tablero: Tablero,
   indice: number
 ): boolean => {
-  if (
+  const isGameInProgress =
     tablero.estadoPartida === "CeroCartasLevantadas" ||
-    tablero.estadoPartida === "UnaCartaLevantada"
-  ) {
-    if (
-      tablero.cartas[indice].encontrada ||
-      tablero.cartas[indice].estaVuelta
-    ) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-  return false;
+    tablero.estadoPartida === "UnaCartaLevantada";
+  const isCardFoundOrFlipped =
+    tablero.cartas[indice].encontrada || tablero.cartas[indice].estaVuelta;
+
+  return isGameInProgress && !isCardFoundOrFlipped;
 };
 
 //TODO: Quitar el cambio de estado de la partida de aqui.
