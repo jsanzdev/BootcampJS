@@ -3,6 +3,7 @@ import { commonPasswords } from "./model";
 
 const passwordDIV = document.getElementById("password");
 const usernameDIV = document.getElementById("username");
+const errorSpan = document.getElementById("error");
 
 // we listen to the input event on the password and username fields
 
@@ -11,7 +12,14 @@ const checkPasswordValidation = (password: string, username: string) => {
 
   // if the password is invalid, we show the error message
   if (!validation.esValida) {
-    console.log(validation.error);
+    if (errorSpan && errorSpan instanceof HTMLSpanElement) {
+      errorSpan.innerHTML = validation.error!;
+    }
+  } else {
+    const errorDiv = document.getElementById("error");
+    if (errorDiv) {
+      errorDiv.textContent = "";
+    }
   }
 };
 
