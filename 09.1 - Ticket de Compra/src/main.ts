@@ -1,3 +1,9 @@
 import "./style.css";
+import { calculaTicket, calcularTicketFinal } from "./motor";
+import { productos } from "./model";
 
-console.log("Hello Typescript!");
+const ticket = calculaTicket(productos);
+
+const ticketFinal = calcularTicketFinal(ticket);
+
+console.log(ticketFinal);
