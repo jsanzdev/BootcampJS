@@ -63,7 +63,8 @@ export const containsUsername = (
   username: string
 ): PasswordValidation => {
   const lowerCasePassword = password.toLowerCase();
-  const usernameParts = username.toLowerCase().split(/(\d+)/).filter(Boolean); // split username into parts
+  // Split the username into parts, so that we can check if the password contains any of them (between words and numbers. Example: "jesus123" -> ["jesus", "123"])
+  const usernameParts = username.toLowerCase().split(/(\d+)/).filter(Boolean);
   if (usernameParts.some((part) => lowerCasePassword.includes(part))) {
     return {
       esValida: false,
