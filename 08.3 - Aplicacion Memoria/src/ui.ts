@@ -158,19 +158,23 @@ export const startGame = (tablero: Tablero) => {
   reiniciarPartidaButtonFunction(tablero);
 };
 
-export const reiniciarPartida = (tablero: Tablero) => {
+const resetAllCards = (tablero: Tablero) => {
   tablero.cartas.forEach((card) => {
     card.estaVuelta = false;
     card.encontrada = false;
   });
   cardsDiv.forEach((div) => {
     div.style.backgroundImage = "";
+    div.classList.remove("flipped");
   });
+};
+
+export const reiniciarPartida = (tablero: Tablero) => {
+  resetAllCards(tablero);
   tablero.intentos = 0;
   updateIntentosDiv(tablero);
-  tablero.estadoPartida = "PartidaNoIniciada";
-  inicializarTablero(tablero);
-  playCards(cardsDiv, tablero);
+  updateGameMessage("", 0);
+  startGame(tablero);
 };
 
 export const reiniciarPartidaButtonFunction = (tablero: Tablero) => {
