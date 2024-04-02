@@ -1,6 +1,8 @@
 import { PasswordValidation } from "./model";
 
-const containsUpperAndLowerCase = (password: string): PasswordValidation => {
+export const containsUpperAndLowerCase = (
+  password: string
+): PasswordValidation => {
   if (
     password.toLowerCase() === password ||
     password.toUpperCase() === password
@@ -16,7 +18,7 @@ const containsUpperAndLowerCase = (password: string): PasswordValidation => {
     };
   }
 };
-const containsNumbers = (password: string): PasswordValidation => {
+export const containsNumbers = (password: string): PasswordValidation => {
   if (!/[0-9]/.test(password)) {
     return {
       esValida: false,
@@ -28,7 +30,9 @@ const containsNumbers = (password: string): PasswordValidation => {
     };
   }
 };
-const containsSpecialCharacters = (password: string): PasswordValidation => {
+export const containsSpecialCharacters = (
+  password: string
+): PasswordValidation => {
   if (!/[^a-zA-Z0-9]/.test(password)) {
     return {
       esValida: false,
@@ -41,7 +45,7 @@ const containsSpecialCharacters = (password: string): PasswordValidation => {
   }
 };
 
-const containsMinimumLength = (password: string): PasswordValidation => {
+export const containsMinimumLength = (password: string): PasswordValidation => {
   if (password.length < 8) {
     return {
       esValida: false,
@@ -54,9 +58,9 @@ const containsMinimumLength = (password: string): PasswordValidation => {
   }
 };
 
-const containsUsername = (
-  nombreUsuario: string,
-  password: string
+export const containsUsername = (
+  password: string,
+  nombreUsuario: string
 ): PasswordValidation => {
   if (password.includes(nombreUsuario)) {
     return {
@@ -70,11 +74,16 @@ const containsUsername = (
   }
 };
 
-const containsCommonWords = (
+export const containsCommonWords = (
   password: string,
   commonPasswords: string[]
 ): PasswordValidation => {
-  if (commonPasswords.includes(password)) {
+  const lowerCasePassword = password.toLowerCase();
+  if (
+    commonPasswords.some((commonPassword) =>
+      lowerCasePassword.includes(commonPassword.toLowerCase())
+    )
+  ) {
     return {
       esValida: false,
       error: "La password no puede ser una password común",
