@@ -97,11 +97,11 @@ export const containsCommonWords = (
   }
 };
 
-export function passwordValidation(
+export const passwordValidation = (
   password: string,
   username: string,
   commonPasswords: string[]
-): PasswordValidation {
+): PasswordValidation => {
   const validations = [
     containsMinimumLength(password),
     containsUpperAndLowerCase(password),
@@ -121,4 +121,4 @@ export function passwordValidation(
       esValida: true,
     };
   }
-}
+};
