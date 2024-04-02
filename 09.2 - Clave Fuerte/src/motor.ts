@@ -60,9 +60,11 @@ export const containsMinimumLength = (password: string): PasswordValidation => {
 
 export const containsUsername = (
   password: string,
-  nombreUsuario: string
+  username: string
 ): PasswordValidation => {
-  if (password.includes(nombreUsuario)) {
+  const lowerCasePassword = password.toLowerCase();
+  const usernameParts = username.toLowerCase().split(/(\d+)/).filter(Boolean); // split username into parts
+  if (usernameParts.some((part) => lowerCasePassword.includes(part))) {
     return {
       esValida: false,
       error: "La password no puede contener el nombre de usuario",

@@ -1,4 +1,4 @@
-import { containsCommonWords } from "./motor";
+import { containsCommonWords, containsUsername } from "./motor";
 import { commonPasswords } from "./model";
 
 describe("Password Validation Testing.", () => {
@@ -58,6 +58,31 @@ describe("Password Validation Testing.", () => {
     // Act
 
     const result = containsCommonWords(password, commonPasswords);
+
+    // Assert
+    expect(result.esValida).toBeFalsy();
+  });
+  it("Contains username Test 1", () => {
+    // Arrange
+
+    const password = "admin12345";
+    const username = "admin";
+
+    // Act
+
+    const result = containsUsername(password, username);
+
+    // Assert
+    expect(result.esValida).toBeFalsy();
+  });
+  it("Contains username Test 2", () => {
+    // Arrange
+
+    const password = "B{Lo@M=0IgX3,Ysi,O4yadmin";
+    const username = "admin1234";
+
+    // Act
+    const result = containsUsername(password, username);
 
     // Assert
     expect(result.esValida).toBeFalsy();
