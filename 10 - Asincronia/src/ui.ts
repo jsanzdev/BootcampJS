@@ -1,6 +1,8 @@
 import { getPersonajes } from "./personajes";
 
-export async function fetchData() {
+const searchInput = document.getElementById("search");
+
+async function fetchData() {
   let data = await getPersonajes();
 
   // Get the search query
@@ -54,3 +56,10 @@ export async function fetchData() {
     }
   });
 }
+
+export const init = () => {
+  fetchData();
+  if (searchInput && searchInput instanceof HTMLInputElement) {
+    searchInput.addEventListener("input", fetchData);
+  }
+};
