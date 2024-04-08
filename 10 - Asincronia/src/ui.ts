@@ -1,11 +1,5 @@
 import { getPersonajes } from "./personajes";
 
-// const createImgElement = (src: string): HTMLImageElement => {
-//   const img = document.createElement("img");
-//   img.src = src;
-//   return img;
-// };
-
 export async function fetchData() {
   let data = await getPersonajes();
 
@@ -14,6 +8,7 @@ export async function fetchData() {
     .value;
 
   // Filter the data based on the search query
+
   data = data.filter((personaje) =>
     personaje.nombre.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -59,5 +54,3 @@ export async function fetchData() {
     }
   });
 }
-
-fetchData();

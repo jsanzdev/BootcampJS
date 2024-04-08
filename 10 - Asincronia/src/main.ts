@@ -5,6 +5,8 @@ import { fetchData } from "./ui";
 
 const searchInput = document.getElementById("search");
 
+fetchData();
+
 if (searchInput && searchInput instanceof HTMLInputElement) {
   searchInput.addEventListener("input", fetchData);
 }
