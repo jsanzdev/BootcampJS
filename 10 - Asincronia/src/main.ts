@@ -1,3 +1,10 @@
 import "./style.css";
+import { fetchData } from "./ui";
 
-console.log("Hello Typescript!");
+// Call fetchData when the input changes
+
+const searchInput = document.getElementById("search");
+
+if (searchInput && searchInput instanceof HTMLInputElement) {
+  searchInput.addEventListener("input", fetchData);
+}
