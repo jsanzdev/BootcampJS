@@ -83,6 +83,12 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+.IBAN-Result {
+  font-size: 1.5em;
+  font-weight: 500;
+  text-align: left;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
