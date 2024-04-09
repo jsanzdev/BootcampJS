@@ -1,5 +1,5 @@
 import "./style.css";
 import { init } from "./ui";
 
-// Call fetchData when the input changes
+// Init the app.
 init();

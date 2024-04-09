@@ -1,11 +1,8 @@
 import Axios, { AxiosError } from "axios";
 import { Personaje } from "./model";
 
-const $ApiURL = "http://localhost:3000/";
-
-const personajesEndpoint = $ApiURL + "personajes";
-
-export const getPersonajes = async (): Promise<Personaje[]> => {
+export const getPersonajes = async (apiURL: string): Promise<Personaje[]> => {
+  const personajesEndpoint = apiURL + "personajes";
   try {
     const { data } = await Axios.get<Personaje[]>(personajesEndpoint);
     return data;

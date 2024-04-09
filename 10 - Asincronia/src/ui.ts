@@ -1,20 +1,25 @@
 import { getPersonajes } from "./personajes";
+import { Personaje } from "./model";
 
 const searchInput = document.getElementById("search");
+const ApiURL = "http://localhost:3000/";
 
-async function fetchData() {
-  let data = await getPersonajes();
+const fetchData = async (): Promise<Personaje[]> => {
+  let data = await getPersonajes(ApiURL);
 
   // Get the search query
   const searchQuery = (document.getElementById("search") as HTMLInputElement)
     .value;
 
   // Filter the data based on the search query
-
   data = data.filter((personaje) =>
     personaje.nombre.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  return data;
+};
+
+const loadData = async (data: Personaje[]) => {
   // Select the div where the cards will be appended
   const personajeList = document.getElementById("personajes-list");
 
@@ -22,7 +27,7 @@ async function fetchData() {
   if (personajeList && personajeList instanceof HTMLDivElement) {
     personajeList.innerHTML = "";
   }
-
+  // Draw the cards
   data.forEach((personaje) => {
     const imgUrl = `http://localhost:3000/${personaje.imagen}`;
 
@@ -55,11 +60,18 @@ async function fetchData() {
       personajeList.appendChild(card);
     }
   });
-}
+};
 
 export const init = () => {
-  fetchData();
+  fetchData().then((data) => {
+    loadData(data);
+  });
+
   if (searchInput && searchInput instanceof HTMLInputElement) {
-    searchInput.addEventListener("input", fetchData);
+    searchInput.addEventListener("input", () => {
+      fetchData().then((data) => {
+        loadData(data);
+      });
+    });
   }
 };
