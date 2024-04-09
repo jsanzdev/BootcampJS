@@ -1,13 +1,14 @@
 import { inspectIBAN } from "./motor";
 
-const IBANentry = document.getElementById("iban") as HTMLInputElement;
-const IBANresult = document.getElementById("IBAN-Result") as HTMLDivElement;
+const IBANentry = document.getElementById("iban");
+const IBANresult = document.getElementById("IBAN-Result");
 
 const showIBANRSULT = (iban: string) => {
-  try {
-    const ibanData = inspectIBAN(iban);
-    // show as a list
-    IBANresult.innerHTML = `
+  if (IBANresult && (IBANresult as HTMLDivElement)) {
+    try {
+      const ibanData = inspectIBAN(iban);
+      // show as a list
+      IBANresult.innerHTML = `
       <ul>
         <li>El IBAN es Valido</li>
         <li>Country code: ${ibanData.countryCode}</li>
@@ -17,15 +18,20 @@ const showIBANRSULT = (iban: string) => {
         <li>Account number: ${ibanData.accountNumber}</li>
       </ul>
     `;
-  } catch (error) {
-    IBANresult.textContent = "IBAN incorrecto";
+    } catch (error) {
+      IBANresult.textContent = "IBAN incorrecto";
+    }
   }
 };
 
 export const getIBANRESULT = () => {
-  showIBANRSULT(IBANentry.value);
+  if (IBANentry && IBANentry instanceof HTMLInputElement) {
+    showIBANRSULT(IBANentry.value);
+  }
 };
 
 export const init = () => {
-  IBANentry.addEventListener("input", getIBANRESULT);
+  if (IBANentry && IBANentry instanceof HTMLInputElement) {
+    IBANentry.addEventListener("input", getIBANRESULT);
+  }
 };
