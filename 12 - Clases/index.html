@@ -1,15 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
-  </head>
-  <body>
-    <div id="app">
-      <h1>TypeScript Sandbox</h1>
-    </div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite + TS</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>Reserva ya tu hotel</h1>
+    <form id="reserva-form" class="reserva-form">
+      <label for="name">Nombre</label>
+      <input type="text" id="name" name="name" />
+      <label for="surname">Apellido</label>
+      <input type="text" id="surname" name="surname" />
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" />
+      <label for="tel">Teléfono</label>
+      <input type="tel" id="tel" name="tel" />
+      <label for="days">Cuantos Dias</label>
+      <input type="number" id="days" name="days" />
+      <label for="rooms">Habitaciones</label>
+      <input type="number" id="rooms" name="rooms" />
+      <label for="pax">Personas</label>
+      <input type="number" id="pax" name="pax" />
+      <label for="type">Tipo de Habitación</label>
+      <select id="type" name="type">
+        <option value="standard">Standard</option>
+        <option value="suite">Suite</option>
+      </select>
+      <label for="breakfast">Desayuno</label>
+      <input type="checkbox" id="breakfast" name="breakfast" />
+      <button type="submit">Comprobar Precios</button>
+    </form>
+    <div id="reserva-info" class="reserva-info"></div>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
 </html>

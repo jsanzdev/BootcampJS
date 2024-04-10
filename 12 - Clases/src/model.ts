@@ -10,7 +10,27 @@ interface RoomPrices {
   suite: number;
 }
 
-export const reservas: Reserva[] = [
+export interface Request {
+  name: string;
+  surname: string;
+  email: string;
+  phone: string;
+  days: number;
+  rooms: number;
+  people: number;
+  type: "standard" | "suite";
+  breakfast: boolean;
+}
+
+export interface HotelPrices {
+  hotelName: "HotelPijo" | "HotelCutre";
+  reservas: Reserva[];
+  subtotal: number;
+  total: number;
+  totalcondescuento?: number;
+}
+
+export const reservasMock: Reserva[] = [
   {
     tipoHabitacion: "standard",
     desayuno: false,
@@ -51,11 +71,13 @@ class Hotel {
 
   getSubtotal() {
     return this.reservas.reduce((total, reserva) => {
-      const precio = this.roomPrices[reserva.tipoHabitacion];
+      const basePrice = this.roomPrices[reserva.tipoHabitacion];
+      const additionalPersonCost = reserva.pax > 1 ? (reserva.pax - 1) * 40 : 0;
+      const roomPrice = (basePrice + additionalPersonCost) * reserva.noches;
       const breakfastCost = reserva.desayuno
-        ? this.breakfastPrice * reserva.pax
+        ? this.breakfastPrice * reserva.pax * reserva.noches
         : 0;
-      return total + precio * reserva.pax * reserva.noches + breakfastCost;
+      return total + roomPrice + breakfastCost;
     }, 0);
   }
 
@@ -67,13 +89,13 @@ class Hotel {
 
   getDiscountedTotal() {
     const total = this.getTotal();
-    return total - total * this.discount;
+    return (total - total * this.discount).toFixed(2);
   }
 }
 
 export class HotelPijo extends Hotel {
   constructor(reservas: Reserva[]) {
-    super(reservas, { standard: 200, suite: 300 });
+    super(reservas, { standard: 100, suite: 150 });
   }
 }
 
