@@ -13,7 +13,7 @@ const getFormData = () => {
     email: (formData.get("email") as string) ?? "",
     phone: (formData.get("tel") as string) ?? "",
     days: Number(formData.get("days") as string) || 0,
-    rooms: Number(formData.get("rooms") as string) || 0,
+    rooms: 1, // We set this because each room is a reservation.
     people: Number(formData.get("pax") as string) || 0,
     type: (formData.get("type") as "standard" | "suite") ?? "standard",
     breakfast: formData.get("breakfast") === "on",
