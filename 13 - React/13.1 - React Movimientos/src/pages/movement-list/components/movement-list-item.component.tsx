@@ -10,8 +10,15 @@ export const MovementListItemComponent: React.FC<Props> = (props) => {
   const { movementItem } = props;
   return (
     <div className={classes.row}>
-      <span className={classes.dataCell}>{movementItem.accountId}</span>
-      <span className={classes.dataCell}>{movementItem.description}</span>
+      <span className={classes.dataCell}>
+        {movementItem.transaction.toLocaleDateString()}
+      </span>
+      <span className={`${classes.dataCell} ${classes.alignRight}`}>
+        {movementItem.realtransaction.toLocaleDateString()}
+      </span>
+      <span className={`${classes.dataCell} ${classes.alignRight}`}>
+        {movementItem.description}
+      </span>
       <span className={`${classes.dataCell} ${classes.alignRight}`}>
         {movementItem.amount}
       </span>
