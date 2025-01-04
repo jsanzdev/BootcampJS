@@ -1,31 +1,55 @@
 import React from "react";
-import { useParams } from "react-router-dom";
 import { AppLayout } from "@/layouts";
-import { MovementVm } from "./movement-list.vm";
+import { AccountWithMovements } from "./movement-list.vm";
 import classes from "./movement-list.page.module.css";
 import { getMovements } from "./api";
+import { getAccountList } from "@/pages/account-list/api";
 import { mapMovementListFromApiToVm } from "./movement-list.mapper";
 import { MovementListTableComponent } from "./components/movement-list-table.component";
 
 export const MovementListPage: React.FC = () => {
-  const [movementList, setMovementList] = React.useState<MovementVm[]>([]);
-  const { id } = useParams<{ id: string }>();
+  const [accountsWithMovements, setAccountsWithMovements] = React.useState<
+    AccountWithMovements[]
+  >([]);
+  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    if (id) {
-      getMovements(id).then((result) =>
-        setMovementList(mapMovementListFromApiToVm(result))
-      );
-    }
-  }, [id]);
+    const fetchAllData = async () => {
+      try {
+        const accounts = await getAccountList();
+        const accountsWithMovementsPromises = accounts.map(async (account) => {
+          const movements = await getMovements(account.id);
+          return {
+            ...account,
+            movements: mapMovementListFromApiToVm(movements),
+          };
+        });
+        const results = await Promise.all(accountsWithMovementsPromises);
+        setAccountsWithMovements(results);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAllData();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <AppLayout>
       <div className={classes.root}>
         <div className={classes.headerContainer}>
-          <h1>Saldos y Últimos movimientos {id}</h1>
+          <h1>Todos los movimientos</h1>
         </div>
-        <MovementListTableComponent movementList={movementList} />
+        {accountsWithMovements.map((account) => (
+          <div key={account.id} className={classes.accountSection}>
+            <h2>Cuenta: {account.name}</h2>
+            <MovementListTableComponent movementList={account.movements} />
+          </div>
+        ))}
       </div>
     </AppLayout>
   );
