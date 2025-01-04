@@ -10,6 +10,6 @@ export const mapMovementListFromApiToVm = (
     amount: movement.amount,
     balance: movement.balance,
     transaction: new Date(movement.transaction),
-    realtransaction: new Date(movement.realtransaction),
+    realTransaction: new Date(movement.realTransaction),
     accountId: movement.accountId,
   }));

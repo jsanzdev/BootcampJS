@@ -4,6 +4,6 @@ export interface Movement {
   amount: number;
   balance: number;
   transaction: Date;
-  realtransaction: Date;
+  realTransaction: Date;
   accountId: string;
 }

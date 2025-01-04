@@ -8,22 +8,35 @@ interface Props {
 
 export const MovementListItemComponent: React.FC<Props> = (props) => {
   const { movementItem } = props;
+
+  const formatDate = (date: Date) => {
+    return date.toLocaleDateString("es-ES", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+  };
+
   return (
     <div className={classes.row}>
-      <span className={classes.dataCell}>
-        {movementItem.transaction.toLocaleDateString()}
+      <span className={`${classes.dataCell} ${classes.alignRight}`}>
+        {formatDate(movementItem.transaction)}
       </span>
       <span className={`${classes.dataCell} ${classes.alignRight}`}>
-        {movementItem.realtransaction.toLocaleDateString()}
+        {formatDate(movementItem.realTransaction)}
+      </span>
+      <span className={classes.dataCell}>{movementItem.description}</span>
+      <span className={`${classes.dataCell} ${classes.alignRight}`}>
+        {movementItem.amount.toLocaleString("es-ES", {
+          style: "currency",
+          currency: "EUR",
+        })}
       </span>
       <span className={`${classes.dataCell} ${classes.alignRight}`}>
-        {movementItem.description}
-      </span>
-      <span className={`${classes.dataCell} ${classes.alignRight}`}>
-        {movementItem.amount}
-      </span>
-      <span className={`${classes.dataCell} ${classes.alignRight}`}>
-        {movementItem.balance}
+        {movementItem.balance.toLocaleString("es-ES", {
+          style: "currency",
+          currency: "EUR",
+        })}
       </span>
     </div>
   );

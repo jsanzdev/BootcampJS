@@ -29,7 +29,7 @@ export const AccountListItemComponent: React.FC<Props> = (props) => {
         break;
       case ACTION_MOVEMENTS:
         navigate(
-          generatePath(appRoutes.movements, {
+          generatePath(appRoutes.movementsByAccount, {
             id: accountItem.id,
           })
         );
