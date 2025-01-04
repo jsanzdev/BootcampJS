@@ -8,6 +8,6 @@ export const mapAccountListFromApiToVm = (
     id: account.id,
     iban: account.iban,
     name: account.name,
-    balance: account.balance.toString(),
+    balance: account.balance,
     lastTransaction: new Date(account.lastTransaction),
   }));
