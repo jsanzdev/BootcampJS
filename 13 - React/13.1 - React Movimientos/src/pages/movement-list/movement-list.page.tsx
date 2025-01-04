@@ -23,7 +23,7 @@ export const MovementListPage: React.FC = () => {
     <AppLayout>
       <div className={classes.root}>
         <div className={classes.headerContainer}>
-          <h1>Movimientos cuenta {id}</h1>
+          <h1>Saldos y Últimos movimientos {id}</h1>
         </div>
         <MovementListTableComponent movementList={movementList} />
       </div>
