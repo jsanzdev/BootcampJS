@@ -26,13 +26,21 @@ export const MovementListItemComponent: React.FC<Props> = (props) => {
         {formatDate(movementItem.realTransaction)}
       </span>
       <span className={classes.dataCell}>{movementItem.description}</span>
-      <span className={`${classes.dataCell} ${classes.alignRight}`}>
+      <span
+        className={`${classes.dataCell} ${classes.alignRight} ${
+          movementItem.amount < 0 ? classes.negative : ""
+        }`}
+      >
         {movementItem.amount.toLocaleString("es-ES", {
           style: "currency",
           currency: "EUR",
         })}
       </span>
-      <span className={`${classes.dataCell} ${classes.alignRight}`}>
+      <span
+        className={`${classes.dataCell} ${classes.alignRight} ${
+          movementItem.balance < 0 ? classes.negative : ""
+        }`}
+      >
         {movementItem.balance.toLocaleString("es-ES", {
           style: "currency",
           currency: "EUR",
