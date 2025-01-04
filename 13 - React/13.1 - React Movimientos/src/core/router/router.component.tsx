@@ -17,6 +17,10 @@ export const Router = () => {
         <Route path={appRoutes.createAccount} element={<AccountPage />} />
         <Route path={appRoutes.editAccount} element={<AccountPage />} />
         <Route path={appRoutes.movements} element={<MovementListPage />} />
+        <Route
+          path={appRoutes.movementsByAccount}
+          element={<MovementListPage />}
+        />
         <Route path={appRoutes.transfer} element={<TransferPage />} />
         <Route
           path={appRoutes.transferFromAccount}
