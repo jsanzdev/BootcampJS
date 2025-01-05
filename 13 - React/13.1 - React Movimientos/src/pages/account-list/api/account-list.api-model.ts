@@ -6,3 +6,8 @@ export interface Account {
   balance: number;
   lastTransaction: string;
 }
+
+export interface NewAccount {
+  type: string;
+  name: string;
+}

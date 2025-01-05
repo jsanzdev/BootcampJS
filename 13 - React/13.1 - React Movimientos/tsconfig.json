@@ -16,7 +16,8 @@
     "noImplicitReturns": true,
     "skipLibCheck": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/helpers/*": ["./src/helpers/*"]
     }
   },
   "include": ["src"],

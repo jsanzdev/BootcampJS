@@ -1,0 +1,75 @@
+.root {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.headerContainer {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 5px solid #232c3b;
+}
+
+.headerContainer h1 {
+  font-size: 2.2rem;
+  font-weight: 300;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formField label {
+  font-weight: bold;
+}
+
+.formField input,
+.formField select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 100%;
+  background-color: white;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.submitButton {
+  background-color: var(--primary_color);
+  color: white;
+  padding: 8px 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cancelButton {
+  background-color: #e0e0e0;
+  color: var(--primary-color);
+  padding: 8px 24px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background-color: var(--primary_color_darker);
+}
+
+.cancelButton:hover {
+  background-color: red;
+}
