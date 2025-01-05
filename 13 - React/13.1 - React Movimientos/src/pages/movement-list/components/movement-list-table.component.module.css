@@ -16,3 +16,8 @@
   font-size: var(--table-header-font-size);
   font-weight: var(--table-header-font-weight);
 }
+
+.balance-header {
+  font-weight: bold;
+  color: #3498db;
+}

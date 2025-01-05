@@ -61,13 +61,16 @@ export const MovementListPage: React.FC = () => {
         <div className={classes.headerContainer}>
           <h1>
             {accountId && accountId !== "movements"
-              ? `Movimientos cuenta ${accountsWithMovements[0]?.name}`
+              ? `Saldos y Ultimos movimientos`
               : "Todos los movimientos"}
           </h1>
         </div>
         {accountsWithMovements.map((account) => (
           <div key={account.id} className={classes.accountSection}>
-            <h2>Cuenta: {account.name}</h2>
+            <div className={classes.accountHeader}>
+              <h2>Alias: {account.name}</h2>
+              <h2>IBAN: {account.iban}</h2>
+            </div>
             <MovementListTableComponent movementList={account.movements} />
           </div>
         ))}

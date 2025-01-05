@@ -12,5 +12,6 @@ export interface AccountWithMovements {
   id: string;
   iban: string;
   name: string;
+  balance: number;
   movements: MovementVm[];
 }

@@ -21,10 +21,11 @@ export const MovementListTableComponent: React.FC<Props> = (props) => {
           <span className={classes.headerCell}>SALDO DISPONIBLE</span>
         </div>
 
-        {movementList.map((movement) => (
+        {movementList.map((movement, index) => (
           <MovementListItemComponent
             key={movement.id}
             movementItem={movement}
+            isFirst={index === 0}
           />
         ))}
       </div>

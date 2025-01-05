@@ -49,3 +49,8 @@
 .negative {
   color: red;
 }
+
+.firstBalance {
+  font-weight: bold;
+  color: #3498db;
+}

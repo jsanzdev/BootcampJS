@@ -4,10 +4,11 @@ import classes from "./movement-list-item.component.module.css";
 
 interface Props {
   movementItem: MovementVm;
+  isFirst: boolean;
 }
 
 export const MovementListItemComponent: React.FC<Props> = (props) => {
-  const { movementItem } = props;
+  const { movementItem, isFirst } = props;
 
   const formatDate = (date: Date) => {
     return date.toLocaleDateString("es-ES", {
@@ -39,7 +40,7 @@ export const MovementListItemComponent: React.FC<Props> = (props) => {
       <span
         className={`${classes.dataCell} ${classes.alignRight} ${
           movementItem.balance < 0 ? classes.negative : ""
-        }`}
+        } ${isFirst ? classes.firstBalance : ""}`}
       >
         {movementItem.balance.toLocaleString("es-ES", {
           style: "currency",
